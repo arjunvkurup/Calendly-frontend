@@ -1,4 +1,5 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Calendly-frontend
+Contains the code for calendly frontend application
 
 ## Available Scripts
 
