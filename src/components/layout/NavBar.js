@@ -3,8 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
+import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -26,31 +25,25 @@ const useStyles = makeStyles(theme => ({
 
 export default function NavBar() {
     const classes = useStyles();
-
     return (
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton
-                        edge="start"
-                        className={classes.menuButton}
-                        color="inherit"
-                        aria-label="menu"
-                    >
-                        {/* <MenuIcon /> */}
-                    </IconButton>
                     <Typography variant="h6" className={classes.title}>
-                        Calendly
+                        {/*TODO: Removed onClick={preventDefault} from Link*/}
+                        <Link variant="contained" underline="none" color="inherit" href="/" >
+                            Calendly
+                        </Link>
                     </Typography>
                     <div className={classes.buttons}>
-                        <Button variant="contained" color="default">
+                        <Link variant="contained" underline="none" color="inherit" href="/signup" >
                             Sign Up
-                        </Button>
+                        </Link>
                     </div>
                     <div className={classes.buttons}>
-                        <Button variant="outlined" color="inherit">
+                        <Link variant="outlined"  underline="none" color="inherit" href="/" >
                             Login
-                        </Button>
+                        </Link>
                     </div>
                 </Toolbar>
             </AppBar>
