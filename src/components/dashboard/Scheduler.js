@@ -1,13 +1,37 @@
-import React from 'react'
-import FullCalendar, { formatDate } from '@fullcalendar/react'
+import React from 'react';
+import FullCalendar, { formatDate } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction'
+import interactionPlugin from '@fullcalendar/interaction';
 import NavBar from "../layout/NavBar";
 import { INITIAL_EVENTS, createEventId } from "./events";
+import ConfirmModal from './ConfirmModal';
 import './scheduler.css';
+import axios from "axios";
 
 export default class Scheduler extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            title: '',
+            id: '',
+            start: '',
+            end: '',
+            currentEvents: []
+        }
+    }
+
+    fetchData = (e) => {
+        e.preventDefault();
+        axios.get('http://127.0.0.1:8000/api/v1/')
+            .then(function (response) {
+                this.setState({currentEvents: response.data});
+
+            })
+            .catch(function (error) {
+                console.log(error.response);
+            });
+        }
 
     handleEventClick = (clickInfo) => {
         if (window.confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
@@ -21,11 +45,9 @@ export default class Scheduler extends React.Component {
         })
     }
 
-
     handleDateSelect = (selectInfo) => {
         let title = prompt('Please enter a new title for your event')
         let calendarApi = selectInfo.view.calendar
-
         calendarApi.unselect() // clear date selection
 
         if (title) {
@@ -34,7 +56,6 @@ export default class Scheduler extends React.Component {
                 title,
                 start: selectInfo.startStr,
                 end: selectInfo.endStr,
-                // allDay: selectInfo.allDay
             })
         }
     }
@@ -45,15 +66,6 @@ export default class Scheduler extends React.Component {
                 <b>{eventInfo.timeText}</b>
                 <i>{eventInfo.event.title}</i>
             </>
-        )
-    }
-
-    renderSidebarEvent = (event) => {
-        return (
-            <li key={event.id}>
-                <b>{formatDate(event.start, {year: 'numeric', month: 'short', day: 'numeric'})}</b>
-                <i>{event.title}</i>
-            </li>
         )
     }
 
@@ -87,6 +99,7 @@ export default class Scheduler extends React.Component {
                         eventsSet={this.handleEvents}
                     />
                 </div>
+                <ConfirmModal />
             </div>
         )
     }
