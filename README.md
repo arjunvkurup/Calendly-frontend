@@ -1,6 +1,8 @@
 # Calendly-frontend
 Contains the code for calendly frontend application
 
+This repositoy contains the frontend code, developed as part of a hiring assignment. This is an unfinished version. 
+
 ## Available Scripts
 
 In the project directory, you can run:
